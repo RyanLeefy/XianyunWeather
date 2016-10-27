@@ -8,7 +8,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 /**
- * 处理Subscription集合，进行取消订阅，防止内存泄漏
+ *
  */
 public class MyCompositeSubscription {
 
