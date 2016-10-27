@@ -26,7 +26,7 @@ import java.util.Date;
 
 import app.dinus.com.loadingdrawable.LoadingView;
 
-
+//saksjdlkasjdlka
 public class MainActivity extends Activity implements IWeatherView {
 
     private TextView cityname,nowweek,nowdate,updatetime,nowcond,nowmintmp,nowmaxtmp,nowtmp,nowhum,nowwind,suggestion;
