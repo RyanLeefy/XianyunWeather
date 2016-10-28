@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ryanlee.rainbowweather.R;
 import com.example.ryanlee.rainbowweather.activity.MainActivity;
 import com.example.ryanlee.rainbowweather.bean.City;
 import com.example.ryanlee.rainbowweather.bean.HeWeatherDataService30;
@@ -14,6 +15,7 @@ import com.example.ryanlee.rainbowweather.bean.WeatherResult;
 import com.example.ryanlee.rainbowweather.model.IWeatherModel;
 import com.example.ryanlee.rainbowweather.model.WeatherModel;
 import com.example.ryanlee.rainbowweather.util.ConPictureUtils;
+import com.example.ryanlee.rainbowweather.util.MyApplication;
 import com.example.ryanlee.rainbowweather.util.MyCompositeSubscription;
 import com.example.ryanlee.rainbowweather.util.StringDateUtils;
 import com.example.ryanlee.rainbowweather.view.IWeatherView;
@@ -78,7 +80,7 @@ public class WeatherPresenter implements IWeatherPresenter {
         if (IshaveSharePreferences) {
             //有sharedpreferences ,先显示数据
             if(city != null && city.getCity_id() != perPreferences.getString("city_id",null)){
-                view.setLoadingViewVisibility(View.VISIBLE);
+                //view.setLoadingViewVisibility(View.VISIBLE);
                 model.getData(subscriber, city.getCity_id());
             } else {
                 view.setSharePreferenceData();
@@ -86,7 +88,7 @@ public class WeatherPresenter implements IWeatherPresenter {
             }
         }else{
             //没有存对应的sharedpreferences，显示Loading画面
-            view.setLoadingViewVisibility(View.VISIBLE);
+            //view.setLoadingViewVisibility(View.VISIBLE);
             model.getData(subscriber, city.getCity_id());
         }
 
@@ -101,42 +103,39 @@ public class WeatherPresenter implements IWeatherPresenter {
         Date curDate = new Date(System.currentTimeMillis());
         String updatetimestring = sdf.format(curDate);
 
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences((MainActivity)view).edit();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
 
         editor.putBoolean("IshaveSharePreferences", true).commit();
         editor.putString("city_name", heWeatherDataService30.getBasic().getCity())
                 .putString("city_id", heWeatherDataService30.getBasic().getId())
                 .commit();
 
-        editor.putString("nowweek", StringDateUtils.getInstance().toFormatStringWeek(heWeatherDataService30.getDailyForecast().get(0).getDate()))
-                .putString("nowdate", StringDateUtils.getInstance().toFormatStringDate(heWeatherDataService30.getDailyForecast().get(0).getDate()))
+        editor.putString("api",heWeatherDataService30.getAqi().getCity().getAqi())
+                .putString("nowweek", StringDateUtils.getInstance().toFormatStringWeek(heWeatherDataService30.getDailyForecast().get(0).getDate()))
                 .putString("updatetime", updatetimestring)
-                .putInt("nowimg", ConPictureUtils.getInstance().getImageResourceByCondCode(heWeatherDataService30.getNow().getCond().getCode()))
-                .putString("nowcond", heWeatherDataService30.getNow().getCond().getTxt())
-                .putString("nowmintmp", heWeatherDataService30.getDailyForecast().get(0).getTmp().getMin())
-                .putString("nowmaxtmp", heWeatherDataService30.getDailyForecast().get(0).getTmp().getMax())
                 .putString("nowtmp", heWeatherDataService30.getNow().getTmp())
-                .putString("nowhum", heWeatherDataService30.getNow().getHum())
+                .putString("nowcond", heWeatherDataService30.getNow().getCond().getTxt())
                 .putString("nowwind", heWeatherDataService30.getNow().getWind().getSc())
+                .putString("nowhumidity", heWeatherDataService30.getNow().getHum())
+                .putString("nowziwaixian", heWeatherDataService30.getSuggestion().getUv().getBrf())
+                .putString("nowqiya", heWeatherDataService30.getNow().getPres())
+                .putInt("nowimg", ConPictureUtils.getInstance().getImageResourceByCondCode(heWeatherDataService30.getNow().getCond().getCode()))
                 .commit();
-        if(heWeatherDataService30.getBasic().getCity().equals("南子岛")){
-            editor.putString("suggestion", " ")
-                    .commit();
-        } else{
-            editor.putString("suggestion", "        " + heWeatherDataService30.getSuggestion().getComf().getTxt())
-                    .commit();
-        }
 
-        for(int i=1; i<= 5; i++){
-             editor .putString("week" + i,StringDateUtils.getInstance().toFormatStringWeek(heWeatherDataService30.getDailyForecast().get(i).getDate()))
+
+        for(int i=0; i<= 5; i++){
+             editor .putString("week" + i, StringDateUtils.getInstance().toFormatStringWeek(heWeatherDataService30.getDailyForecast().get(i).getDate()))
                     .putString("date" + i, StringDateUtils.getInstance().toFormatStringDate(heWeatherDataService30.getDailyForecast().get(i).getDate()))
-                    .putInt("img" + i ,ConPictureUtils.getInstance().getImageResourceByCondCode(heWeatherDataService30.getDailyForecast().get(i).getCond().getCodeD()))
-                    .putString("mintmp" + i, heWeatherDataService30.getDailyForecast().get(i).getTmp().getMin())
-                    .putString("maxtmp" + i, heWeatherDataService30.getDailyForecast().get(i).getTmp().getMax())
-                    .putString("cond" + i, heWeatherDataService30.getDailyForecast().get(i).getCond().getTxtD())
-                    .putString("wind" + i, heWeatherDataService30.getDailyForecast().get(i).getWind().getSc())
+                    .putInt("day_img" + i, ConPictureUtils.getInstance().getImageResourceByCondCode(heWeatherDataService30.getDailyForecast().get(i).getCond().getCodeD()))
+                     .putString("day_cond" + i, heWeatherDataService30.getDailyForecast().get(i).getCond().getTxtD())
+                     .putInt("night_img" + i, ConPictureUtils.getInstance().getImageResourceByCondCode(heWeatherDataService30.getDailyForecast().get(i).getCond().getCodeN()))
+                     .putString("night_cond" + i, heWeatherDataService30.getDailyForecast().get(i).getCond().getTxtN())
+                     .putString("wind_direction" + i, heWeatherDataService30.getDailyForecast().get(i).getWind().getDir())
+                     .putString("wind_power" + i, heWeatherDataService30.getDailyForecast().get(i).getWind().getSc())
                      .commit();
         }
+
+
     }
 
     @Override

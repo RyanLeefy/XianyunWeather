@@ -7,4 +7,9 @@
     <color name="btn_pressed_color">#3ca0ec</color>
     <color name="color_blue">#4A90E2</color>
     <color name="green">#FF26F107</color>
+    <color name="liang">#FFEECF28</color>
+    <color name="qingdu">#FFEE981E</color>
+    <color name="zhongdu1">#FFEE5E82</color>
+    <color name="zhongdu2">#FF941B12</color>
+    <color name="yanzhong">#FF43061B</color>
 </resources>

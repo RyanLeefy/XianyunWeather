@@ -16,14 +16,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:background="#5677fc"
         >
-
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:background="@drawable/change"
             android:layout_marginRight="3dp" />
-
         <com.example.ryanlee.rainbowweather.ui.CustomTextView
             android:id="@+id/tv_cityname"
             android:layout_width="wrap_content"
@@ -31,10 +30,16 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="城市"
+            android:textColor="@color/color_white"
             android:textSize="25sp"/>
-
-
     </LinearLayout>
+    <fr.castorflex.android.verticalviewpager.VerticalViewPager
+        android:id="@+id/vp_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </fr.castorflex.android.verticalviewpager.VerticalViewPager>
+
+
     </LinearLayout>
 
     <app.dinus.com.loadingdrawable.LoadingView

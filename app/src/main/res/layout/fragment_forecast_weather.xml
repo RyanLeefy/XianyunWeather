@@ -10,13 +10,45 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp">
 
-        <android.support.v7.widget.RecyclerVie
-            android:layout_width="match_parent"
-            android:layout_height="400dp">
-        </android.support.v7.widget.RecyclerVie>
-
+        <com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout
+            android:id="@+id/layout_forest1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        </com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout>
+        <com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout
+            android:id="@+id/layout_forest2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        </com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout>
+        <com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout
+            android:id="@+id/layout_forest3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        </com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout>
+        <com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout
+            android:id="@+id/layout_forest4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        </com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout>
+        <com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout
+            android:id="@+id/layout_forest5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        </com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout>
+        <com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout
+            android:id="@+id/layout_forest6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        </com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout>
     </LinearLayout>
 </LinearLayout>
 

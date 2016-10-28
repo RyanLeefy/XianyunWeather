@@ -31,6 +31,7 @@
                     <!-- ShapeDrawable myShape = (ShapeDrawable)view.getBackground();
                          myShape.setColor(color);  -->
                     <TextView
+                        android:id="@+id/tv_api"
                         android:background="@drawable/apitextbackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -82,8 +83,8 @@
 
                     <ImageView
                         android:id="@+id/img_nowcond"
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_marginTop="25dp"
                         android:layout_below="@id/layout_updatetime"
                         android:layout_centerHorizontal="true"
@@ -92,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/img_nowcond"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:layout_centerHorizontal="true">
                         <TextView
                             android:id="@+id/tv_nowtmp"
@@ -128,7 +129,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="50dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,9 +143,8 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:background="@drawable/layout_withrightborder">
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
                     <TextView
                         android:id="@+id/tv_nowwind"
                         android:layout_width="wrap_content"
@@ -162,15 +163,19 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_blue" />
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:background="@drawable/layout_withrightborder"
                     android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp">
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
                     <TextView
                         android:id="@+id/tv_nowhumidity"
                         android:layout_width="wrap_content"
@@ -188,17 +193,21 @@
                         />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_blue" />
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:background="@drawable/layout_withrightborder">
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
                     <TextView
-                        android:id="@+id/tvnowziwaixian"
+                        android:id="@+id/tv_nowziwaixian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -214,14 +223,19 @@
                         />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_blue" />
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
                     >
                     <TextView
                         android:id="@+id/tv_nowqiya"
@@ -244,13 +258,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <app.dinus.com.loadingdrawable.LoadingView
-        android:id="@+id/level_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg"
-        android:visibility="invisible"
-        app:loading_renderer="LevelLoadingRenderer" />
 
 </FrameLayout>

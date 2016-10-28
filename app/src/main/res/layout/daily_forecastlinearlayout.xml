@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_marginTop="5dp"
     >
-    <com.example.ryanlee.rainbowweather.ui.CustomTextView
+    <TextView
         android:id="@+id/tv_dayweek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,90 +13,77 @@
         android:text="周X"
         android:textSize="16sp"
         />
-    <com.example.ryanlee.rainbowweather.ui.CustomTextView
+    <TextView
         android:id="@+id/tv_daydate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_dayweek"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:text="XX月XX日"
+        android:text="xx/xx"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tv_day_morning_cond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_daydate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="多云"
         android:textSize="16sp"/>
     <ImageView
-        android:id="@+id/img_day"
+        android:id="@+id/img_day_morning_img"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_below="@id/tv_daydate"
-        android:layout_marginTop="3dp"
+        android:layout_below="@id/tv_day_morning_cond"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"/>
 
-        <LinearLayout
-              android:id="@+id/tv_daytmplayout"
-              android:layout_below="@id/img_day"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="3dp"
-              android:layout_centerHorizontal="true"
-              android:orientation="horizontal"
-            >
-
-             <com.example.ryanlee.rainbowweather.ui.CustomTextView
-                 android:id="@+id/tv_daytmp_min"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerHorizontal="true"
-                 android:text="XX"
-                 android:textSize="16sp"/>
-
-            <com.example.ryanlee.rainbowweather.ui.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="℃"
-                android:textSize="12sp"/>
-
-            <com.example.ryanlee.rainbowweather.ui.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="～"
-                android:textSize="12sp"/>
-
-            <com.example.ryanlee.rainbowweather.ui.CustomTextView
-                android:id="@+id/tv_daytmp_max"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="XX"
-                android:textSize="16sp"/>
-
-            <com.example.ryanlee.rainbowweather.ui.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="℃"
-                android:textSize="12sp"/>
-
-         </LinearLayout>
-
-    <com.example.ryanlee.rainbowweather.ui.CustomTextView
-        android:id="@+id/tv_daycond"
+    <com.example.ryanlee.rainbowweather.ui.WeatherLineView
+        android:id="@+id/wlv_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_daytmplayout"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/img_day_morning_img"/>
+
+    <ImageView
+        android:id="@+id/img_day_night_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/wlv_day"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tv_day_night_cond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_day_night_img"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="3dp"
-        android:text="雷阵雨"
+        android:layout_marginTop="10dp"
+        android:text="多云"
         android:textSize="16sp"
         />
-    <com.example.ryanlee.rainbowweather.ui.CustomTextView
-        android:id="@+id/tv_daywind"
+
+    <TextView
+        android:id="@+id/tv_day_wind_direction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_daycond"
+        android:layout_below="@id/tv_day_night_cond"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="北风"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:id="@+id/tv_day_wind_power"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_day_wind_direction"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:text="微风"
+        android:text="3级"
         android:textSize="16sp"
         />
 </RelativeLayout>

@@ -23,11 +23,13 @@ public class StringDateUtils {
         Calendar c = createCalendar(date);
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DATE);
-        String datestring = month + "月" + day + "日";
+        String datestring = month + "/" + day;
         return datestring;
     }
 
     public String toFormatStringWeek(String date) {
+        if(date.equals("今天"))
+            return date;
         Calendar c = createCalendar(date);
         int week = c.get(Calendar.DAY_OF_WEEK);
         String weekstring = null;
