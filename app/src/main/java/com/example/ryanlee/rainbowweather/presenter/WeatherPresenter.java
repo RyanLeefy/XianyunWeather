@@ -31,6 +31,8 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class WeatherPresenter implements IWeatherPresenter {
 
+    private static int FLAG_ISFORE = 1;
+
     private IWeatherView view;
     private IWeatherModel model;
     Subscriber<WeatherResult> subscriber;
@@ -67,8 +69,10 @@ public class WeatherPresenter implements IWeatherPresenter {
                     view.setData(weatherResult);
                     SaveDataInSharePreference(weatherResult);
                     view.setLoadingViewVisibility(View.INVISIBLE); //读取成功后取消Loading画面
+                    if(FLAG_ISFORE == 1)
                     Toast.makeText((MainActivity)view, "更新天气成功", Toast.LENGTH_SHORT).show();
                 } else{                               //获取失败
+                    if(FLAG_ISFORE == 1)
                     Toast.makeText((MainActivity)view, "获取天气失败！", Toast.LENGTH_LONG).show();
                 }
 
@@ -142,6 +146,11 @@ public class WeatherPresenter implements IWeatherPresenter {
     public void onDestroy(){
         mSubscriptions = MyCompositeSubscription.getNewCompositeSubIfUnsubscribed(mSubscriptions);
         mSubscriptions.unsubscribe();
+    }
+
+    @Override
+    public void setback() {
+        FLAG_ISFORE = 0;
     }
 
 

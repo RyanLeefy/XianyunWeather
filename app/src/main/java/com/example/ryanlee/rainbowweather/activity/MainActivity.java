@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import com.example.ryanlee.rainbowweather.util.ConPictureUtils;
 import com.example.ryanlee.rainbowweather.util.StringDateUtils;
 import com.example.ryanlee.rainbowweather.view.IWeatherView;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +51,9 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
     private City city = null;
     private LoadingView loadingview;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private Handler mHandler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +67,35 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
         cityname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this , ChooseCityActivity.class);
+                Intent i = new Intent(MainActivity.this, ChooseCityActivity.class);
                 startActivityForResult(i, 1);
             }
         });
+
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefreshlayout);
+
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // 刷新动画开始后回调到此方法
+
+                        mHandler.postDelayed(new Runnable() {
+                            public void run() {
+                                //if(!=null)
+                                presenter.onCreate();
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        }, 2000);
+                    }
+                }
+        );
 
         viewPager = (VerticalViewPager)findViewById(R.id.vp_vertical);
         nowfragment = new NowWeatherFragment();
@@ -74,6 +106,25 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
 
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager() , fragmentList);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==0)
+                    swipeRefreshLayout.setEnabled(true);     //第一页时候可用，可下拉
+                else if(position==1)
+                    swipeRefreshLayout.setEnabled(false);    //第二页时候不可用
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         loadingview = (LoadingView)findViewById(R.id.level_view);
 
@@ -82,11 +133,6 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
 
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-
-    }
 
     @Override
     public void setData(WeatherResult weatherResult) {
@@ -134,13 +180,24 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
     }
 
     @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        presenter.onDestroy();
+    protected void onStop(){
+        super.onStop();
+        //按Home键弹出去时候，把切换到后台的信息传给presenter
+        presenter.setback();
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    protected void onDestroy(){
+        super.onDestroy();
+        presenter.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
+
+    @Override
+    public void onFragmentInteraction() {
+        presenter.onCreate();
+    }
+
 }
+
+

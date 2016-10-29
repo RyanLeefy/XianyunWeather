@@ -7,8 +7,10 @@ import android.graphics.drawable.ShapeDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,7 @@ public class NowWeatherFragment extends Fragment {
 
     private ImageView img_nowcond;
 
-
+    //private SwipeRefreshLayout swipeRefreshLayout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -104,13 +106,47 @@ public class NowWeatherFragment extends Fragment {
         tv_nowqiya      = (TextView)v.findViewById(R.id.tv_nowqiya);
         img_nowcond     = (ImageView)v.findViewById(R.id.img_nowcond);
 
+        /*
+        swipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swiperefreshlayout);
+        //设置下拉出现小圆圈是否是缩放出现，出现的位置，最大的下拉位置
+        //swipeRefreshLayout.setProgressViewOffset(true, 50, 200);
+
+        // 设置下拉圆圈上的颜色，蓝色、绿色、橙色、红色
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        /*
+        * 设置手势下拉刷新的监听
+        */
+        /*
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // 刷新动画开始后回调到此方法
+                        new Handler().postDelayed(new Runnable() {
+                            public void run() {
+                                if(mListener!=null) {
+                                    mListener.onFragmentInteraction();
+                                    swipeRefreshLayout.setRefreshing(false);
+                                }
+                            }
+                        },3000);
+                    }
+                }
+        );
+        */
+
         return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
@@ -150,7 +186,7 @@ public class NowWeatherFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction();
     }
 
     public void setData(WeatherResult weatherResult){

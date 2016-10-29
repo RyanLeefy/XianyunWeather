@@ -6,4 +6,5 @@ package com.example.ryanlee.rainbowweather.presenter;
 public interface IWeatherPresenter {
     void onCreate();
     void onDestroy();
+    void setback();
 }
