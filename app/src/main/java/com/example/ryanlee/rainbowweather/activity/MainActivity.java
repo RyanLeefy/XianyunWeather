@@ -1,9 +1,7 @@
 package com.example.ryanlee.rainbowweather.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -11,9 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ryanlee.rainbowweather.R;
@@ -23,18 +20,12 @@ import com.example.ryanlee.rainbowweather.bean.HeWeatherDataService30;
 import com.example.ryanlee.rainbowweather.bean.WeatherResult;
 import com.example.ryanlee.rainbowweather.presenter.IWeatherPresenter;
 import com.example.ryanlee.rainbowweather.presenter.WeatherPresenter;
-import com.example.ryanlee.rainbowweather.ui.Daily_forecastLayout;
-import com.example.ryanlee.rainbowweather.util.ConPictureUtils;
-import com.example.ryanlee.rainbowweather.util.StringDateUtils;
+import com.example.ryanlee.rainbowweather.util.MyApplication;
 import com.example.ryanlee.rainbowweather.view.IWeatherView;
 
-import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import app.dinus.com.loadingdrawable.LoadingView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 
 public class MainActivity extends FragmentActivity implements IWeatherView,ForecastWeatherFragment.OnFragmentInteractionListener,NowWeatherFragment.OnFragmentInteractionListener {
@@ -49,7 +40,7 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
     private IWeatherPresenter presenter;
 
     private City city = null;
-    private LoadingView loadingview;
+    private RelativeLayout loadinglayout;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler mHandler = new Handler();
@@ -126,7 +117,7 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
             }
         });
 
-        loadingview = (LoadingView)findViewById(R.id.level_view);
+        loadinglayout = (RelativeLayout)findViewById(R.id.loadinglayout);
 
         presenter=new WeatherPresenter(this,city);
         presenter.onCreate();
@@ -161,9 +152,9 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
     @Override
     public void setLoadingViewVisibility(int Visibility){
         if(Visibility == View.VISIBLE){
-            loadingview.setVisibility(View.VISIBLE);
+            loadinglayout.setVisibility(View.VISIBLE);
         } else{
-            loadingview.setVisibility(View.INVISIBLE);
+            loadinglayout.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -177,6 +168,13 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
                     presenter.onCreate();
                 }
         }
+    }
+
+    //在onStart()中设置前台FLAG，以防activity从home通过onstart()回来。
+    @Override
+    protected void onStart(){
+        super.onStart();
+        MyApplication.setFlagIsfore(1);
     }
 
     @Override

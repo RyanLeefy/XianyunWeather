@@ -8,6 +8,7 @@ import android.content.Context;
  */
 public class MyApplication extends Application {
     private static Context context;
+    private static int FLAG_ISFORE = 0;
 
     @Override
     public void onCreate(){
@@ -16,5 +17,13 @@ public class MyApplication extends Application {
 
     public static Context getContext(){
         return context;
+    }
+
+    public static void setFlagIsfore(int i){
+        FLAG_ISFORE = i;
+    }
+
+    public static int getFlagIsfore(){
+        return FLAG_ISFORE;
     }
 }

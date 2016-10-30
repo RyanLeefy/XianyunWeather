@@ -12,4 +12,5 @@ public interface ICityPresenter {
     void performOnClickforresult(City city);
     void performOnSearch(String text);
     void ShowCity(int count);
+    void setback();
 }

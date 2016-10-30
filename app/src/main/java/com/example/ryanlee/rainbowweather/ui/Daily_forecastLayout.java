@@ -12,7 +12,6 @@ import com.example.ryanlee.rainbowweather.bean.Temperatur;
 import com.example.ryanlee.rainbowweather.util.ConPictureUtils;
 import com.example.ryanlee.rainbowweather.util.StringDateUtils;
 
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -17,31 +18,66 @@
             android:textSize="20sp"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
-        <com.example.ryanlee.rainbowweather.ui.SearchView
-            android:id="@+id/searchview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </com.example.ryanlee.rainbowweather.ui.SearchView>
-    </LinearLayout>
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        <com.example.ryanlee.rainbowweather.ui.CornerListView
-            android:id="@+id/ls_city"
-            android:background="@drawable/list_border"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
-        </com.example.ryanlee.rainbowweather.ui.CornerListView>
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+                <com.example.ryanlee.rainbowweather.ui.SearchView
+                    android:id="@+id/searchview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </com.example.ryanlee.rainbowweather.ui.SearchView>
+             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <com.example.ryanlee.rainbowweather.ui.CornerListView
+                    android:id="@+id/ls_city"
+                    android:background="@drawable/list_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp">
+                </com.example.ryanlee.rainbowweather.ui.CornerListView>
+             </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/cityloadinglayout"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <app.dinus.com.loadingdrawable.LoadingView
+                android:id="@+id/level_view2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerInParent="true"
+                app:loading_renderer="LevelLoadingRenderer" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在读取城市信息..."
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/level_view2"
+                />
+
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

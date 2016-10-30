@@ -12,4 +12,5 @@ public interface ICityView {
     void updateView(List<City> cities);
     void setAdapter(CityAdapter adapter);
     void hideLoadingLayout();
+    void setLoadingViewVisibility(int Visibility);
 }

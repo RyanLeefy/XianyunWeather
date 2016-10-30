@@ -3,11 +3,9 @@ package com.example.ryanlee.rainbowweather.presenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ryanlee.rainbowweather.R;
 import com.example.ryanlee.rainbowweather.activity.MainActivity;
 import com.example.ryanlee.rainbowweather.bean.City;
 import com.example.ryanlee.rainbowweather.bean.HeWeatherDataService30;
@@ -31,7 +29,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class WeatherPresenter implements IWeatherPresenter {
 
-    private static int FLAG_ISFORE = 1;
+
 
     private IWeatherView view;
     private IWeatherModel model;
@@ -48,7 +46,6 @@ public class WeatherPresenter implements IWeatherPresenter {
 
     @Override
     public void onCreate() {
-
         subscriber = new Subscriber<WeatherResult>() {
             @Override
             public void onCompleted() {
@@ -69,10 +66,10 @@ public class WeatherPresenter implements IWeatherPresenter {
                     view.setData(weatherResult);
                     SaveDataInSharePreference(weatherResult);
                     view.setLoadingViewVisibility(View.INVISIBLE); //读取成功后取消Loading画面
-                    if(FLAG_ISFORE == 1)
+                    if(MyApplication.getFlagIsfore() == 1)
                     Toast.makeText((MainActivity)view, "更新天气成功", Toast.LENGTH_SHORT).show();
                 } else{                               //获取失败
-                    if(FLAG_ISFORE == 1)
+                    if(MyApplication.getFlagIsfore() == 1)
                     Toast.makeText((MainActivity)view, "获取天气失败！", Toast.LENGTH_LONG).show();
                 }
 
@@ -92,7 +89,7 @@ public class WeatherPresenter implements IWeatherPresenter {
             }
         }else{
             //没有存对应的sharedpreferences，显示Loading画面
-            //view.setLoadingViewVisibility(View.VISIBLE);
+            view.setLoadingViewVisibility(View.VISIBLE);
             model.getData(subscriber, city.getCity_id());
         }
 
@@ -109,10 +106,10 @@ public class WeatherPresenter implements IWeatherPresenter {
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
 
-        editor.putBoolean("IshaveSharePreferences", true).commit();
+        editor.putBoolean("IshaveSharePreferences", true).apply();
         editor.putString("city_name", heWeatherDataService30.getBasic().getCity())
                 .putString("city_id", heWeatherDataService30.getBasic().getId())
-                .commit();
+                .apply();
 
         editor.putString("api",heWeatherDataService30.getAqi().getCity().getAqi())
                 .putString("nowweek", StringDateUtils.getInstance().toFormatStringWeek(heWeatherDataService30.getDailyForecast().get(0).getDate()))
@@ -124,7 +121,7 @@ public class WeatherPresenter implements IWeatherPresenter {
                 .putString("nowziwaixian", heWeatherDataService30.getSuggestion().getUv().getBrf())
                 .putString("nowqiya", heWeatherDataService30.getNow().getPres())
                 .putInt("nowimg", ConPictureUtils.getInstance().getImageResourceByCondCode(heWeatherDataService30.getNow().getCond().getCode()))
-                .commit();
+                .apply();
 
 
         for(int i=0; i<= 5; i++){
@@ -136,7 +133,7 @@ public class WeatherPresenter implements IWeatherPresenter {
                      .putString("night_cond" + i, heWeatherDataService30.getDailyForecast().get(i).getCond().getTxtN())
                      .putString("wind_direction" + i, heWeatherDataService30.getDailyForecast().get(i).getWind().getDir())
                      .putString("wind_power" + i, heWeatherDataService30.getDailyForecast().get(i).getWind().getSc())
-                     .commit();
+                     .apply();
         }
 
 
@@ -150,7 +147,7 @@ public class WeatherPresenter implements IWeatherPresenter {
 
     @Override
     public void setback() {
-        FLAG_ISFORE = 0;
+        MyApplication.setFlagIsfore(0);
     }
 
 

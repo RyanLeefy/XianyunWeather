@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="myred">#eb4f38</color>
+    <color name="gray">#FF9D9D9D</color>
     <color name="darkgray">#cccc</color>
     <color name="color_white">#ffffff</color>
     <color name="btn_press_color">#5677fc</color>

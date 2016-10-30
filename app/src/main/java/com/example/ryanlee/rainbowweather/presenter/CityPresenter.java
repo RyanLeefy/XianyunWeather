@@ -1,9 +1,10 @@
 package com.example.ryanlee.rainbowweather.presenter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.ryanlee.rainbowweather.activity.ChooseCityActivity;
@@ -49,9 +50,10 @@ public class CityPresenter implements ICityPresenter {
     @Override
     public void onCreate() {
 
+
         mSubscriptions = MyCompositeSubscription.getNewCompositeSubIfUnsubscribed(mSubscriptions);
 
-        perPreferences = MyApplication.getContext().getSharedPreferences("HasDownLoad", MyApplication.getContext().MODE_PRIVATE);
+        perPreferences = MyApplication.getContext().getSharedPreferences("HasDownLoad", Context.MODE_PRIVATE);
 
         subscriber = new Subscriber<CityResult>() {
             @Override
@@ -62,6 +64,7 @@ public class CityPresenter implements ICityPresenter {
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                if(MyApplication.getFlagIsfore() == 1)
                 Toast.makeText((ChooseCityActivity)view, "获取数据失败", Toast.LENGTH_LONG).show();
                 //Log.d("ChooseCityActivity", "!!Error");
             }
@@ -90,6 +93,7 @@ public class CityPresenter implements ICityPresenter {
                                 @Override
                                 public void onError(Throwable e) {
                                     e.printStackTrace();
+                                    if(MyApplication.getFlagIsfore() == 1)
                                     Toast.makeText((ChooseCityActivity)view, "获取数据失败", Toast.LENGTH_LONG).show();
                                     //Log.d("ChooseCityActivity", "4");
                                 }
@@ -97,20 +101,23 @@ public class CityPresenter implements ICityPresenter {
                                 @Override
                                 public void onNext(Boolean aBoolean) {    //存入数据库完成
                                     //Log.d("ChooseCityActivity", "5");
-                                    if (aBoolean == true) {
+                                    if (aBoolean) {
                                         //Log.d("ChooseCityActivity", "6");
                                         //存入数据库完成后，读取List进行显示
-                                        Toast.makeText(MyApplication.getContext(), "存入数据库", Toast.LENGTH_LONG).show();
+                                        if(MyApplication.getFlagIsfore() == 1)
+                                        Toast.makeText(MyApplication.getContext(), "读取城市成功", Toast.LENGTH_LONG).show();
                                         ShowCity(0);
+                                        view.setLoadingViewVisibility(View.INVISIBLE);//读取成功后取消Loading画面
                                         SharedPreferences.Editor editor = CityPresenter.this.perPreferences.edit();
                                         editor.putBoolean("HasDownLoad", true);
-                                        editor.commit();
+                                        editor.apply();
                                     }
                                 }
                             }));
 
                 } else {
                     //Log.d("ChooseCityActivity", "7");
+                    if(MyApplication.getFlagIsfore() == 1)
                     Toast.makeText((ChooseCityActivity)view, "获取数据失败", Toast.LENGTH_LONG).show();
                 }
             }
@@ -119,6 +126,7 @@ public class CityPresenter implements ICityPresenter {
         //判断下载了没
         HasDownLoad = perPreferences.getBoolean("HasDownLoad",false);
         if (!HasDownLoad) {
+            view.setLoadingViewVisibility(View.VISIBLE);//首次登陆时候，先显示等待页面
             model.getData(subscriber);  //首次登陆，下载城市数据，存入数据库，读取前50条显示
         }else{
             ShowCity(0);                //选择城市，读取前50条显示
@@ -159,7 +167,8 @@ public class CityPresenter implements ICityPresenter {
                     public void onError(Throwable e) {
                         //Log.d("ChooseCityActivity", "2");
                         e.printStackTrace();
-                        Toast.makeText((ChooseCityActivity)view, "搜索失败", Toast.LENGTH_LONG).show();
+                        if(MyApplication.getFlagIsfore() == 1)
+                        Toast.makeText((ChooseCityActivity) view, "搜索失败", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -167,6 +176,7 @@ public class CityPresenter implements ICityPresenter {
                         //Log.d("cities.size():", String.valueOf(cities.size()));
                         if (cities.size() == 0) {
                             //Log.d("ChooseCityActivity", "3");
+                            if(MyApplication.getFlagIsfore() == 1)
                             Toast.makeText((ChooseCityActivity) view, "查询不到相关结果", Toast.LENGTH_LONG).show();
                         } else {
                             CityAdapter adapter = new CityAdapter((ChooseCityActivity) view, cities);
@@ -191,6 +201,7 @@ public class CityPresenter implements ICityPresenter {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        if(MyApplication.getFlagIsfore() == 1)
                         Toast.makeText((ChooseCityActivity) view, "读取城市列表失败", Toast.LENGTH_LONG).show();
                         //Log.d("ChooseCityActivity", "2");
                     }
@@ -214,6 +225,12 @@ public class CityPresenter implements ICityPresenter {
         mSubscriptions = MyCompositeSubscription.getNewCompositeSubIfUnsubscribed(mSubscriptions);
         mSubscriptions.unsubscribe();
     }
+
+    @Override
+    public void setback() {
+        MyApplication.setFlagIsfore(0);
+    }
+
 
 
 }

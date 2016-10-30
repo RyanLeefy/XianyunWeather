@@ -3,7 +3,6 @@ package com.example.ryanlee.rainbowweather.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
@@ -11,8 +10,8 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ryanlee.rainbowweather.R;
 import com.example.ryanlee.rainbowweather.adapter.CityAdapter;
@@ -21,6 +20,7 @@ import com.example.ryanlee.rainbowweather.presenter.CityPresenter;
 import com.example.ryanlee.rainbowweather.presenter.ICityPresenter;
 import com.example.ryanlee.rainbowweather.ui.CornerListView;
 import com.example.ryanlee.rainbowweather.ui.SearchView;
+import com.example.ryanlee.rainbowweather.util.MyApplication;
 import com.example.ryanlee.rainbowweather.view.ICityView;
 
 import java.util.ArrayList;
@@ -36,6 +36,7 @@ public class ChooseCityActivity extends Activity implements ICityView{
     CityAdapter adapter;
     private ICityPresenter presenter;
     private SearchView searchView;
+    private RelativeLayout cityloadinglayout;
 
     private final static int NORMAL = 10001;
     private final static int SEARCH = 10002;
@@ -61,6 +62,7 @@ public class ChooseCityActivity extends Activity implements ICityView{
 
         ls_city = (CornerListView)findViewById(R.id.ls_city);
         searchView = (SearchView)findViewById(R.id.searchview);
+        cityloadinglayout = (RelativeLayout)findViewById(R.id.cityloadinglayout);
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -115,7 +117,7 @@ public class ChooseCityActivity extends Activity implements ICityView{
                 }else {                    //没选过城市，即从WelcomeActivity中来
                     SharedPreferences.Editor editor = perPreferences.edit();
                     editor.putBoolean("isCitySelect", true);
-                    editor.commit();
+                    editor.apply();
                     presenter.performOnClick((City) parent.getAdapter().getItem(position));
                 }
 
@@ -166,6 +168,29 @@ public class ChooseCityActivity extends Activity implements ICityView{
     @Override
     public void hideLoadingLayout() {
         loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setLoadingViewVisibility(int Visibility) {
+        if(Visibility == View.VISIBLE){
+            cityloadinglayout.setVisibility(View.VISIBLE);
+        } else{
+            cityloadinglayout.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    //在onStart()中设置前台FLAG，以防activity从home通过onstart()回来。
+    @Override
+    protected void onStart(){
+        MyApplication.setFlagIsfore(1);
+    }
+
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        //按Home键弹出去时候，把切换到后台的信息传给presenter
+        presenter.setback();
     }
 
     @Override
