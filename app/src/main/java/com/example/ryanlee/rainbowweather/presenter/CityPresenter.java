@@ -64,7 +64,7 @@ public class CityPresenter implements ICityPresenter {
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                if(MyApplication.getFlagIsfore() == 1)
+                if(MyApplication.getCHOSEFlagIsfore() == 1)
                 Toast.makeText((ChooseCityActivity)view, "获取数据失败", Toast.LENGTH_LONG).show();
                 //Log.d("ChooseCityActivity", "!!Error");
             }
@@ -93,7 +93,7 @@ public class CityPresenter implements ICityPresenter {
                                 @Override
                                 public void onError(Throwable e) {
                                     e.printStackTrace();
-                                    if(MyApplication.getFlagIsfore() == 1)
+                                    if(MyApplication.getCHOSEFlagIsfore() == 1)
                                     Toast.makeText((ChooseCityActivity)view, "获取数据失败", Toast.LENGTH_LONG).show();
                                     //Log.d("ChooseCityActivity", "4");
                                 }
@@ -104,7 +104,7 @@ public class CityPresenter implements ICityPresenter {
                                     if (aBoolean) {
                                         //Log.d("ChooseCityActivity", "6");
                                         //存入数据库完成后，读取List进行显示
-                                        if(MyApplication.getFlagIsfore() == 1)
+                                        if(MyApplication.getCHOSEFlagIsfore() == 1)
                                         Toast.makeText(MyApplication.getContext(), "读取城市成功", Toast.LENGTH_LONG).show();
                                         ShowCity(0);
                                         view.setLoadingViewVisibility(View.INVISIBLE);//读取成功后取消Loading画面
@@ -117,7 +117,7 @@ public class CityPresenter implements ICityPresenter {
 
                 } else {
                     //Log.d("ChooseCityActivity", "7");
-                    if(MyApplication.getFlagIsfore() == 1)
+                    if(MyApplication.getCHOSEFlagIsfore() == 1)
                     Toast.makeText((ChooseCityActivity)view, "获取数据失败", Toast.LENGTH_LONG).show();
                 }
             }
@@ -167,7 +167,7 @@ public class CityPresenter implements ICityPresenter {
                     public void onError(Throwable e) {
                         //Log.d("ChooseCityActivity", "2");
                         e.printStackTrace();
-                        if(MyApplication.getFlagIsfore() == 1)
+                        if(MyApplication.getCHOSEFlagIsfore() == 1)
                         Toast.makeText((ChooseCityActivity) view, "搜索失败", Toast.LENGTH_LONG).show();
                     }
 
@@ -176,7 +176,7 @@ public class CityPresenter implements ICityPresenter {
                         //Log.d("cities.size():", String.valueOf(cities.size()));
                         if (cities.size() == 0) {
                             //Log.d("ChooseCityActivity", "3");
-                            if(MyApplication.getFlagIsfore() == 1)
+                            if(MyApplication.getCHOSEFlagIsfore() == 1)
                             Toast.makeText((ChooseCityActivity) view, "查询不到相关结果", Toast.LENGTH_LONG).show();
                         } else {
                             CityAdapter adapter = new CityAdapter((ChooseCityActivity) view, cities);
@@ -201,7 +201,7 @@ public class CityPresenter implements ICityPresenter {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        if(MyApplication.getFlagIsfore() == 1)
+                        if(MyApplication.getCHOSEFlagIsfore() == 1)
                         Toast.makeText((ChooseCityActivity) view, "读取城市列表失败", Toast.LENGTH_LONG).show();
                         //Log.d("ChooseCityActivity", "2");
                     }
@@ -228,7 +228,7 @@ public class CityPresenter implements ICityPresenter {
 
     @Override
     public void setback() {
-        MyApplication.setFlagIsfore(0);
+        MyApplication.setCHOSEFlagIsfore(0);
     }
 
 

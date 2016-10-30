@@ -174,7 +174,7 @@ public class MainActivity extends FragmentActivity implements IWeatherView,Forec
     @Override
     protected void onStart(){
         super.onStart();
-        MyApplication.setFlagIsfore(1);
+        MyApplication.setMAINFlagIsfore(1);
     }
 
     @Override

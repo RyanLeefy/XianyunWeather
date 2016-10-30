@@ -8,7 +8,8 @@ import android.content.Context;
  */
 public class MyApplication extends Application {
     private static Context context;
-    private static int FLAG_ISFORE = 0;
+    private static int FLAG_CHOSE_ISFORE = 0;
+    private static int FLAG_MAIN_ISFORE = 0;
 
     @Override
     public void onCreate(){
@@ -19,11 +20,19 @@ public class MyApplication extends Application {
         return context;
     }
 
-    public static void setFlagIsfore(int i){
-        FLAG_ISFORE = i;
+    public static void setCHOSEFlagIsfore(int i){
+        FLAG_CHOSE_ISFORE = i;
     }
 
-    public static int getFlagIsfore(){
-        return FLAG_ISFORE;
+    public static int getCHOSEFlagIsfore(){
+        return FLAG_CHOSE_ISFORE;
+    }
+
+    public static void setMAINFlagIsfore(int i){
+        FLAG_MAIN_ISFORE = i;
+    }
+
+    public static int getMAINFlagIsfore(){
+        return FLAG_MAIN_ISFORE;
     }
 }

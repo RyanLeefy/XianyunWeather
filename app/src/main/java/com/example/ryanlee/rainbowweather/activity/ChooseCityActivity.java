@@ -182,7 +182,8 @@ public class ChooseCityActivity extends Activity implements ICityView{
     //在onStart()中设置前台FLAG，以防activity从home通过onstart()回来。
     @Override
     protected void onStart(){
-        MyApplication.setFlagIsfore(1);
+        super.onStart();
+        MyApplication.setCHOSEFlagIsfore(1);
     }
 
 

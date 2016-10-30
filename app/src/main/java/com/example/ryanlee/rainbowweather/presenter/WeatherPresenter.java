@@ -66,10 +66,10 @@ public class WeatherPresenter implements IWeatherPresenter {
                     view.setData(weatherResult);
                     SaveDataInSharePreference(weatherResult);
                     view.setLoadingViewVisibility(View.INVISIBLE); //读取成功后取消Loading画面
-                    if(MyApplication.getFlagIsfore() == 1)
+                    if(MyApplication.getMAINFlagIsfore() == 1)
                     Toast.makeText((MainActivity)view, "更新天气成功", Toast.LENGTH_SHORT).show();
                 } else{                               //获取失败
-                    if(MyApplication.getFlagIsfore() == 1)
+                    if(MyApplication.getMAINFlagIsfore() == 1)
                     Toast.makeText((MainActivity)view, "获取天气失败！", Toast.LENGTH_LONG).show();
                 }
 
@@ -147,7 +147,7 @@ public class WeatherPresenter implements IWeatherPresenter {
 
     @Override
     public void setback() {
-        MyApplication.setFlagIsfore(0);
+        MyApplication.setMAINFlagIsfore(0);
     }
 
 
