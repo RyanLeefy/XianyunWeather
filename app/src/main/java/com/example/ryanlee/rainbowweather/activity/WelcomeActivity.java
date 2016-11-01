@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
+
+import com.example.ryanlee.rainbowweather.db.DataBaseUtil;
 
 /**
  * Created by Ryanlee on 2016/8/15 0015.
@@ -13,14 +16,20 @@ public class WelcomeActivity extends Activity {
 
     private boolean isCitySelect = false;
 
-    private static final int TIME = 2*1000;
+    private static final int TIME = 1*1000;
     private static final int TO_MAIN = 100001;
     private static final int TO_CHOOSE = 100002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DataBaseUtil dbutil = new DataBaseUtil(this);
+        //if(!dbutil.checkDataBase())
+        dbutil.copyDataBase();
+
         init();
+
     }
 
 
@@ -51,8 +60,10 @@ public class WelcomeActivity extends Activity {
         isCitySelect = perPreferences.getBoolean("isCitySelect", false);
         if (isCitySelect) {
             myHandler.sendEmptyMessage(TO_MAIN);
+            //myHandler.sendEmptyMessageDelayed(TO_MAIN, TIME);
         }else{
             myHandler.sendEmptyMessage(TO_CHOOSE);
+            //myHandler.sendEmptyMessageDelayed(TO_CHOOSE,TIME);
         }
 
     }

@@ -23,12 +23,16 @@ public class RainbowWeatherDB {
     /**
      * 数据库名
      */
-    public static final String DB_NAME = "rainbow_weather";
+    public static final String DB_NAME = "rainbow_weather.db";
 
     /**
      * 数据库版本
      */
     public static final int VERSION = 1;
+
+
+    private static String DATABASE_PATH;
+
 
     private static RainbowWeatherDB rainbowWeatherDB;
 
@@ -46,12 +50,19 @@ public class RainbowWeatherDB {
 
 
 
+
+
     /**
      * 将构造方法私有化
      */
     private RainbowWeatherDB(Context context){
-        RainbowWeatherOpenHepler dbHepler = new RainbowWeatherOpenHepler(context, DB_NAME, null, VERSION);
-        db = dbHepler.getWritableDatabase();
+        //RainbowWeatherOpenHepler dbHepler = new RainbowWeatherOpenHepler(context, DB_NAME, null, VERSION);
+        String packagename = context.getPackageName();
+        DATABASE_PATH = "/data/data/" + packagename + "/databases/";
+        String filepath = DATABASE_PATH + DB_NAME;
+        db = SQLiteDatabase.openOrCreateDatabase(filepath,null);
+        //db = dbHepler.getWritableDatabase();
+
 
     }
 

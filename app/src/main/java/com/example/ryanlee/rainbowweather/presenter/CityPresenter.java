@@ -126,8 +126,10 @@ public class CityPresenter implements ICityPresenter {
         //判断下载了没
         HasDownLoad = perPreferences.getBoolean("HasDownLoad",false);
         if (!HasDownLoad) {
-            view.setLoadingViewVisibility(View.VISIBLE);//首次登陆时候，先显示等待页面
-            model.getData(subscriber);  //首次登陆，下载城市数据，存入数据库，读取前50条显示
+            //view.setLoadingViewVisibility(View.VISIBLE);//首次登陆时候，先显示等待页面
+            //model.getData(subscriber);  //首次登陆，下载城市数据，存入数据库，读取前50条显示
+            ShowCity(0);
+
         }else{
             ShowCity(0);                //选择城市，读取前50条显示
         }
